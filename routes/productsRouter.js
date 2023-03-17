@@ -2,6 +2,7 @@ const { faker } = require('@faker-js/faker');
 const express = require('express');
 const router = express.Router();
 
+
 //Se crea un router específico para todo lo relacionado con los productos
 router.get('/', (req, res) => {
   let { size } = req.query;
@@ -29,6 +30,15 @@ router.get('/:id', (req, res) => {
     name: 'Product 2',
     price: 5000,
   });
+});
+
+router.post('/', (req, res)=>{
+  const body = req.body;
+  res.status(201).json({
+    status: 201,
+    message: "Created",
+    data: body
+  })
 });
 
 module.exports = router;
