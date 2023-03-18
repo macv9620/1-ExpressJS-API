@@ -1,44 +1,66 @@
-const { faker } = require('@faker-js/faker');
 const express = require('express');
+//Importar el servicio de productos
+const ProductsService = require('../services/productsServices');
+
 const router = express.Router();
+const service = new ProductsService();
 
-
-//Se crea un router específico para todo lo relacionado con los productos
+//Obtener productos
 router.get('/', (req, res) => {
-  let { size } = req.query;
-
-  const limit = size || 2;
-  const products = [];
-  for (let i = 0; i < limit; i++) {
-    products.push({
-      name: faker.commerce.productName(),
-      price: parseInt(faker.commerce.price(), 10),
-      image: faker.image.imageUrl(),
-    });
-  }
+  console.log('ingrese');
+  const products = service.find();
   res.json(products);
 });
 
-router.get('/filter', (req, res) => {
-  res.send('Soy filter en endpoint específico');
-});
 
+//Obtener 1 producto con base en 1 id
 router.get('/:id', (req, res) => {
+console.log('ingrese 2');
   const { id } = req.params;
-  res.json({
-    id,
-    name: 'Product 2',
-    price: 5000,
-  });
+  console.log(id);
+  const product = service.findOne(Number(id));
+  console.log(product);
+  if(product){
+    res.status(200).json(product);
+  }else{
+    res.status(404).json({
+      status: 404,
+      message: "Not found"
+    })
+  }
 });
 
-router.post('/', (req, res)=>{
+
+//Crear un producto
+router.post('/', (req, res) => {
   const body = req.body;
   res.status(201).json({
     status: 201,
-    message: "Created",
+    message: 'Created',
+    data: body,
+  });
+});
+
+//PATCH-update
+router.patch('/:id', (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+  res.status(200).json({
+    status: 200,
+    message: 'Updated',
+    id: id,
     data: body
-  })
+  });
+});
+
+//DELETE
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+  res.status(200).json({
+    status: 200,
+    message: 'Deleted',
+    id: id,
+  });
 });
 
 module.exports = router;

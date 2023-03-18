@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+//Middleware para poder recibir JSON
 app.use(express.json());
 const port = 3000;
 const routerApi = require('./routes/index');
