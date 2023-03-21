@@ -10,7 +10,7 @@ class ProductsService {
     const limit = 100;
     for (let i = 0; i < limit; i++) {
       this.products.push({
-        id: i,
+        id: faker.datatype.uuid(),
         name: faker.commerce.productName(),
         price: parseInt(faker.commerce.price(), 10),
         image: faker.image.imageUrl(),
@@ -18,15 +18,32 @@ class ProductsService {
     }
   }
 
-  create() {}
+  create(data) {
+    const neededProperties = ['name', 'price', 'image'];
+    let propertiesFilteredProduct = {};
+    for (let i = 0; i < neededProperties.length; i++) {
+      propertiesFilteredProduct[neededProperties[i]] =
+        data[neededProperties[i]];
+
+        if(!data[neededProperties[i]]){
+          return `Invalid ${neededProperties[i]} property value`;
+        }
+    }
+
+    const newProduct = {
+      id: faker.datatype.uuid(),
+      ...propertiesFilteredProduct,
+    };
+    this.products.push(newProduct);
+    return newProduct;
+  }
 
   find() {
     return this.products;
   }
 
   findOne(id) {
-    console.log('From find' + id);
-    return this.products.find((product)=>product.id === id);
+    return this.products.find((product) => product.id === id);
   }
 
   update() {}

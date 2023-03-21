@@ -12,33 +12,37 @@ router.get('/', (req, res) => {
   res.json(products);
 });
 
-
 //Obtener 1 producto con base en 1 id
 router.get('/:id', (req, res) => {
-console.log('ingrese 2');
   const { id } = req.params;
-  console.log(id);
   const product = service.findOne(Number(id));
-  console.log(product);
-  if(product){
+  if (product) {
     res.status(200).json(product);
-  }else{
+  } else {
     res.status(404).json({
       status: 404,
-      message: "Not found"
-    })
+      message: 'Not found',
+    });
   }
 });
-
 
 //Crear un producto
 router.post('/', (req, res) => {
   const body = req.body;
-  res.status(201).json({
-    status: 201,
-    message: 'Created',
-    data: body,
-  });
+  const returnedNewProduct = service.create(body);
+  console.log(typeof returnedNewProduct);
+  if (typeof returnedNewProduct === 'string') {
+    res.status(400).json({
+      status: 400,
+      message: returnedNewProduct,
+    });
+  } else {
+    res.status(201).json({
+      status: 201,
+      message: 'Created',
+      data: returnedNewProduct,
+    });
+  }
 });
 
 //PATCH-update
@@ -49,7 +53,7 @@ router.patch('/:id', (req, res) => {
     status: 200,
     message: 'Updated',
     id: id,
-    data: body
+    data: body,
   });
 });
 
