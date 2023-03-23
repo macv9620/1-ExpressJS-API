@@ -216,7 +216,8 @@ $RECYCLE.BIN/
 *.lnk
 
 # Vs code
-.vscode/
+/.editorconfig
+/.eslintrc.json
 
 
 # End of https://www.toptal.com/developers/gitignore/api/node,windows,linux,macos
