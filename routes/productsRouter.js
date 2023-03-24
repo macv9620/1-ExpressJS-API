@@ -64,11 +64,8 @@ router.put('/:id', (req, res) => {
 //DELETE
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  res.status(200).json({
-    status: 200,
-    message: 'Deleted',
-    id: id,
-  });
+  const deleteResult = service.delete(id);
+  res.status(deleteResult.status).json(deleteResult);
 });
 
 module.exports = router;

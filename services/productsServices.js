@@ -144,6 +144,32 @@ class ProductsService {
       };
     }
   }
+
+  //DELETE
+  delete(id) {
+    try {
+      const index = this.products.findIndex((product) => product.id === id);
+      if (index === -1) {
+        throw new Error(`Poduct id:${id} not found`, {
+          cause: 404,
+        });
+      }
+
+      this.products.splice(index, 1);
+      return {
+        status: 200,
+        message: `Product id:${id} deleted`,
+        data: {
+          id: id
+        },
+      }
+    } catch (err) {
+      return {
+        status: err.cause,
+        message: err.message,
+      };
+    }
+  }
 }
 
 module.exports = ProductsService;
