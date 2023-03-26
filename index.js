@@ -6,7 +6,7 @@ const port = 3000;
 const routerApi = require('./routes/index');
 
 app.get('/', (req, res) => {
-  res.send('Consultaste el server!!');
+  res.send('Bienvenido a ProductAPI, consulta el contrato de la API');
 });
 
 
