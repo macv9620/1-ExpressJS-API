@@ -1,50 +1,63 @@
 const ProductsService = require("../services/products/productsServices");
 const service = new ProductsService();
 
+//OK control de error Try Catch
 async function getAll(req, res) {
-  const products = await service.find();
-  res.json(products);
+  try {
+    const products = await service.find();
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      status: 500,
+      message: err.message,
+    });
+  }
 }
 
+//OK control de error Try Catch
 async function getItem(req, res) {
-  const { id } = req.params;
-  console.log(id);
-  const product = await service.findOne(id);
-  console.log(product);
-  if (product) {
-    res.status(200).json(product);
-  } else {
-    res.status(404).json({
-      status: 404,
-      message: "Not found",
+  try {
+    const { id } = req.params;
+    const product = await service.findOne(id);
+    res.status(product.status).json(product);
+  } catch (err) {
+    res.status(err.cause).json({
+      status: err.cause,
+      message: err.message,
     });
   }
 }
 
+//OK control de error Try Catch
 async function createProduct(req, res) {
-  const body = req.body;
-  //Se captura la respuesta del método creado en el servicio
-  const returnedNewProduct = await service.create(body);
-  //Si es string es porque fue capturado el error que se lanzó desde .create(body), si no es string es porque se capturó el objeto retornado, en ese caso la información estaba correcta
-  if (typeof returnedNewProduct === "string") {
-    res.status(400).json({
-      status: 400,
-      message: returnedNewProduct,
-    });
-  } else {
-    res.status(201).json({
-      status: 201,
-      message: "Created",
-      data: returnedNewProduct,
+  try {
+    const body = req.body;
+    //Se captura la respuesta del método creado en el servicio
+    const result = await service.create(body);
+    res.status(result.status).json(result);
+  } catch (err) {
+    res.status(err.cause).json({
+      status: err.cause,
+      message: err.message,
     });
   }
 }
 
+//OK control de error Try Catch
 async function updatePartial(req, res) {
-  const { id } = req.params;
-  const body = req.body;
-  const updateResult = await service.updatePartial(id, body);
-  res.status(updateResult.status).json(updateResult);
+    try{
+        const { id } = req.params;
+        const body = req.body;
+        const updateResult = await service.updatePartial(id, body);
+        res.status(updateResult.status).json(updateResult);
+    } catch(err){
+        res.status(err.cause).json({
+            status:err.cause,
+            message: err.message
+        })
+    }
+
 }
 
 async function updateAll(req, res) {
@@ -54,6 +67,7 @@ async function updateAll(req, res) {
   res.status(updateResult.status).json(updateResult);
 }
 
+//OK control de error Try Catch
 async function deleteItem(req, res) {
   try {
     const { id } = req.params;
@@ -73,5 +87,5 @@ module.exports = {
   createProduct,
   updatePartial,
   updateAll,
-  deleteItem
+  deleteItem,
 };
