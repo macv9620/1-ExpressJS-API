@@ -2,9 +2,9 @@
 
 //Se importa express para poder usar .Router()
 const express = require('express');
-const producstRouter = require('./productsRouter');
-const usersRouter = require('./usersRouter');
-const categoriesRouter = require('./categoriesRouter');
+const producstRouter = require('./productsRouter/productsRouter');
+const usersRouter = require('./usersRouter/usersRouter');
+const categoriesRouter = require('./categoriesRouter/categoriesRouter');
 
 
 function routerApi(app) {

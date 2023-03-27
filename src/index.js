@@ -3,7 +3,7 @@ const app = express();
 //Middleware para poder recibir JSON
 app.use(express.json());
 const port = 3000;
-const routerApi = require('./routes/index');
+const routerApi = require('./routes/main.routes');
 
 app.get('/', (req, res) => {
   res.send('Bienvenido a ProductAPI, consulta el contrato de la API');
