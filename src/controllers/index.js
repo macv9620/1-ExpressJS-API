@@ -1,17 +1,14 @@
 const ProductsService = require("../services/products/productsServices");
 const service = new ProductsService();
 
+//Para incorporar el middleware se agrega el parámetro next y el error debe ser capturado para enviarlo
 //OK control de error Try Catch
-async function getAll(req, res) {
+async function getAll(req, res, next) {
   try {
     const products = await service.find();
     res.json(products);
   } catch (err) {
-    console.log(err);
-    res.status(500).json({
-      status: 500,
-      message: err.message,
-    });
+    next(err);
   }
 }
 
@@ -46,25 +43,31 @@ async function createProduct(req, res) {
 
 //OK control de error Try Catch
 async function updatePartial(req, res) {
-    try{
-        const { id } = req.params;
-        const body = req.body;
-        const updateResult = await service.updatePartial(id, body);
-        res.status(updateResult.status).json(updateResult);
-    } catch(err){
-        res.status(err.cause).json({
-            status:err.cause,
-            message: err.message
-        })
-    }
-
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const updateResult = await service.updatePartial(id, body);
+    res.status(updateResult.status).json(updateResult);
+  } catch (err) {
+    res.status(err.cause).json({
+      status: err.cause,
+      message: err.message,
+    });
+  }
 }
 
 async function updateAll(req, res) {
-  const { id } = req.params;
-  const body = req.body;
-  const updateResult = await service.updateAll(id, body);
-  res.status(updateResult.status).json(updateResult);
+  try {
+    const { id } = req.params;
+    const body = req.body;
+    const updateResult = await service.updateAll(id, body);
+    res.status(updateResult.status).json(updateResult);
+  } catch (err) {
+    res.status(err.cause).json({
+      status: err.cause,
+      message: err.message,
+    });
+  }
 }
 
 //OK control de error Try Catch

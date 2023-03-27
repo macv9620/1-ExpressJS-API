@@ -1,5 +1,5 @@
 const { faker } = require("@faker-js/faker");
-const setTimeoutTime = 2000;
+const setTimeoutTime = 1000;
 
 class ProductsService {
   constructor() {
@@ -21,7 +21,7 @@ class ProductsService {
     }
   }
 
-  //OK controlado por promesa
+  //OK  promesa
   async create(data) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -54,7 +54,7 @@ class ProductsService {
     });
   }
 
-  //OK controlado por promesa
+  //OK  promesa
   async find() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -67,7 +67,7 @@ class ProductsService {
     });
   }
 
-  //OK controlado por promesa
+  //OK  promesa
   async findOne(id) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -87,7 +87,7 @@ class ProductsService {
   }
 
   //PATCH
-  //OK controlado por promesa
+  //OK  promesa
   async updatePartial(id, paramsToUpdate) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -138,52 +138,56 @@ class ProductsService {
   }
 
   //PUT
+    //OK  promesa
   async updateAll(id, paramsToUpdate) {
-    try {
-      let propertiesFilteredProduct = {};
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        let propertiesFilteredProduct = {};
+        let error = undefined;
 
-      const index = this.products.findIndex((product) => product.id === id);
-      if (index === -1) {
-        throw new Error(`Poduct id:${id} not found`, {
-          cause: 404,
-        });
-      }
+        const index = this.products.findIndex((product) => product.id === id);
+        if (index === -1) {
+          error = new Error(`Poduct id:${id} not found`, {
+            cause: 404,
+          });
+          reject(error);
+        }
 
-      for (let i = 0; i < this.neededProperties.length; i++) {
-        if (paramsToUpdate[this.neededProperties[i]]) {
-          propertiesFilteredProduct[this.neededProperties[i]] =
-            paramsToUpdate[this.neededProperties[i]];
-        } else {
-          throw new Error(`${this.neededProperties[i]} property invalid`, {
+        for (let i = 0; i < this.neededProperties.length; i++) {
+          if (paramsToUpdate[this.neededProperties[i]]) {
+            propertiesFilteredProduct[this.neededProperties[i]] =
+              paramsToUpdate[this.neededProperties[i]];
+          } else {
+            error = new Error(`${this.neededProperties[i]} property invalid`, {
+              cause: 400,
+            });
+            reject(error);
+          }
+        }
+
+        if (Object.keys(propertiesFilteredProduct).length === 0) {
+          error = new Error(`Properties or values to update not sent`, {
             cause: 400,
           });
+          reject(error);
         }
-      }
 
-      if (Object.keys(propertiesFilteredProduct).length === 0) {
-        throw new Error(`Properties or values to update not sent`, {
-          cause: 400,
-        });
-      }
+        this.products[index] = {
+          ...this.products[index],
+          ...propertiesFilteredProduct,
+        };
 
-      this.products[index] = {
-        ...this.products[index],
-        ...propertiesFilteredProduct,
-      };
-      return {
-        status: 200,
-        message: `Product id:${id} updated`,
-        data: this.products[index],
-      };
-    } catch (err) {
-      return {
-        status: err.cause,
-        message: err.message,
-      };
-    }
+        const result = {
+          status: 200,
+          message: `Product id:${id} updated`,
+          data: this.products[index],
+        };
+        resolve(result);
+      }, setTimeoutTime);
+    });
   }
 
-  //OK controlado por promesa
+  //OK  promesa
   async delete(id) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
