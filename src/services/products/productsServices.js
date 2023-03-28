@@ -25,31 +25,34 @@ class ProductsService {
   async create(data) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        let propertiesFilteredProduct = {};
-        //Este script recorre los datos enviados y retorna error si alguno de los parámetros obligatorios fue enviado sin información
-        for (let i = 0; i < this.neededProperties.length; i++) {
-          propertiesFilteredProduct[this.neededProperties[i]] =
-            data[this.neededProperties[i]];
-
-          if (!data[this.neededProperties[i]]) {
-            const error = new Error(
-              `${this.neededProperties[i]} is not defined o has a invalid value`,
-              { cause: 400 }
-            );
-            reject(error);
+        try {
+          let propertiesFilteredProduct = {};
+          //Este script recorre los datos enviados y retorna error si alguno de los parámetros obligatorios fue enviado sin información
+          for (let i = 0; i < this.neededProperties.length; i++) {
+            propertiesFilteredProduct[this.neededProperties[i]] =
+              data[this.neededProperties[i]];
+            if (!data[this.neededProperties[i]]) {
+              const error = new Error(
+                `${this.neededProperties[i]} is not defined o has a invalid value`,
+                { cause: 400 }
+              );
+              reject(error);
+            }
           }
-        }
 
-        const newProduct = {
-          id: faker.datatype.uuid(),
-          ...propertiesFilteredProduct,
-        };
-        this.products.push(newProduct);
-        resolve({
-          status: 201,
-          message: "Product created",
-          data: newProduct,
-        });
+          const newProduct = {
+            id: faker.datatype.uuid(),
+            ...propertiesFilteredProduct,
+          };
+          this.products.push(newProduct);
+          resolve({
+            status: 201,
+            message: "Product created",
+            data: newProduct,
+          });
+        } catch (error) {
+          reject(error);
+        }
       }, setTimeoutTime);
     });
   }
@@ -71,15 +74,21 @@ class ProductsService {
   async findOne(id) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const product = this.products.find((product) => product.id === id);
-        if (product) {
-          const result = {
-            status: 200,
-            data: product,
-          };
-          resolve(result);
-        } else {
-          const error = new Error(`Product id:${id} not found`, { cause: 404 });
+        try {
+          const product = this.products.find((product) => product.id === id);
+          if (product) {
+            const result = {
+              status: 200,
+              data: product,
+            };
+            resolve(result);
+          } else {
+            const error = new Error(`Product id:${id} not found`, {
+              cause: 404,
+            });
+            reject(error);
+          }
+        } catch (error) {
           reject(error);
         }
       }, setTimeoutTime);
@@ -88,125 +97,145 @@ class ProductsService {
 
   //PATCH
   //OK  promesa
+  //OK middleware
   async updatePartial(id, paramsToUpdate) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        let propertiesFilteredProduct = {};
-        //Este script recorre los datos enviados y retorna error si alguno de los parámetros obligatorios fue enviado sin información
+        try {
+          let propertiesFilteredProduct = {};
+          //Este script recorre los datos enviados y retorna error si alguno de los parámetros obligatorios fue enviado sin información
 
-        const index = this.products.findIndex((product) => product.id === id);
-        if (index === -1) {
-          const error = new Error(`Poduct id:${id} not found`, {
-            cause: 404,
-          });
-          reject(error);
-        }
-
-        for (let i = 0; i < this.neededProperties.length; i++) {
-          if (paramsToUpdate[this.neededProperties[i]]) {
-            propertiesFilteredProduct[this.neededProperties[i]] =
-              paramsToUpdate[this.neededProperties[i]];
-          } else if (paramsToUpdate[this.neededProperties[i]] === "") {
-            const error = new Error(
-              `Invalid ${this.neededProperties[i]} property value`,
-              {
-                cause: 400,
-              }
-            );
+          const index = this.products.findIndex((product) => product.id === id);
+          if (index === -1) {
+            const error = new Error(`Poduct id:${id} not found`, {
+              cause: 404,
+            });
             reject(error);
           }
-        }
 
-        if (Object.keys(propertiesFilteredProduct).length === 0) {
-          const error = new Error(`Properties to update not sent`, {
-            cause: 400,
+          for (let i = 0; i < this.neededProperties.length; i++) {
+            if (paramsToUpdate[this.neededProperties[i]]) {
+              propertiesFilteredProduct[this.neededProperties[i]] =
+                paramsToUpdate[this.neededProperties[i]];
+              SADFASFSADFSD;
+            } else if (paramsToUpdate[this.neededProperties[i]] === "") {
+              const error = new Error(
+                `Invalid ${this.neededProperties[i]} property value`,
+                {
+                  cause: 400,
+                }
+              );
+              reject(error);
+            }
+          }
+
+          if (Object.keys(propertiesFilteredProduct).length === 0) {
+            const error = new Error(`Properties to update not sent`, {
+              cause: 400,
+            });
+            reject(error);
+          }
+
+          this.products[index] = {
+            ...this.products[index],
+            ...propertiesFilteredProduct,
+          };
+          resolve({
+            status: 200,
+            message: `Product id:${id} updated`,
+            data: propertiesFilteredProduct,
           });
-          reject(error);
+        } catch (err) {
+          reject(err);
         }
-
-        this.products[index] = {
-          ...this.products[index],
-          ...propertiesFilteredProduct,
-        };
-        resolve({
-          status: 200,
-          message: `Product id:${id} updated`,
-          data: propertiesFilteredProduct,
-        });
       }, setTimeoutTime);
     });
   }
 
   //PUT
-    //OK  promesa
+  //OK  promesa
+  //OK middleware
   async updateAll(id, paramsToUpdate) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        let propertiesFilteredProduct = {};
-        let error = undefined;
+        try {
+          let propertiesFilteredProduct = {};
+          let error = undefined;
 
-        const index = this.products.findIndex((product) => product.id === id);
-        if (index === -1) {
-          error = new Error(`Poduct id:${id} not found`, {
-            cause: 404,
-          });
-          reject(error);
-        }
+          const index = this.products.findIndex((product) => product.id === id);
+          if (index === -1) {
+            error = new Error(`Poduct id:${id} not found`, {
+              cause: 404,
+            });
+            reject(error);
+          }
 
-        for (let i = 0; i < this.neededProperties.length; i++) {
-          if (paramsToUpdate[this.neededProperties[i]]) {
-            propertiesFilteredProduct[this.neededProperties[i]] =
-              paramsToUpdate[this.neededProperties[i]];
-          } else {
-            error = new Error(`${this.neededProperties[i]} property invalid`, {
+          for (let i = 0; i < this.neededProperties.length; i++) {
+            if (paramsToUpdate[this.neededProperties[i]]) {
+              propertiesFilteredProduct[this.neededProperties[i]] =
+                paramsToUpdate[this.neededProperties[i]];
+            } else {
+              error = new Error(
+                `${this.neededProperties[i]} property invalid`,
+                {
+                  cause: 400,
+                }
+              );
+              reject(error);
+            }
+          }
+
+          if (Object.keys(propertiesFilteredProduct).length === 0) {
+            error = new Error(`Properties or values to update not sent`, {
               cause: 400,
             });
             reject(error);
           }
+
+          this.products[index] = {
+            ...this.products[index],
+            ...propertiesFilteredProduct,
+          };
+
+          const result = {
+            status: 200,
+            message: `Product id:${id} updated`,
+            data: this.products[index],
+          };
+          resolve(result);
+        } catch (err) {
+          reject(err);
         }
-
-        if (Object.keys(propertiesFilteredProduct).length === 0) {
-          error = new Error(`Properties or values to update not sent`, {
-            cause: 400,
-          });
-          reject(error);
-        }
-
-        this.products[index] = {
-          ...this.products[index],
-          ...propertiesFilteredProduct,
-        };
-
-        const result = {
-          status: 200,
-          message: `Product id:${id} updated`,
-          data: this.products[index],
-        };
-        resolve(result);
       }, setTimeoutTime);
     });
   }
 
   //OK  promesa
+  //OK middleware
   async delete(id) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const index = this.products.findIndex((product) => product.id === id);
-        if (index === -1) {
-          const error = new Error(`Poduct id:${id} not found`, {
-            cause: 404,
-          });
-          reject(error);
-        } else {
-          this.products.splice(index, 1);
-          const result = {
-            status: 200,
-            message: `Product id:${id} deleted`,
-            data: {
-              id: id,
-            },
-          };
-          resolve(result);
+        try {
+          const index = this.products.findIndex((product) => product.id === id);
+          if (index === -1) {
+            const error = new Error(`Poduct id:${id} not found`, {
+              cause: 404,
+            });
+
+            reject(error);
+          } else {
+            this.products.splice(index, 1);
+            const result = {
+              status: 200,
+              message: `Product id:${id} deleted`,
+              data: {
+                id: id,
+              },
+            };
+            resolve(result);
+          }
+        } catch (err) {
+          reject(err);
         }
       }, setTimeoutTime);
     });
