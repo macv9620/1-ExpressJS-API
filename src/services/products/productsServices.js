@@ -1,5 +1,5 @@
 const { faker } = require("@faker-js/faker");
-const setTimeoutTime = 1000;
+const setTimeoutTime = 0;
 
 class ProductsService {
   constructor() {
@@ -89,6 +89,7 @@ class ProductsService {
             reject(error);
           }
         } catch (error) {
+          console.log(error);
           reject(error);
         }
       }, setTimeoutTime);
