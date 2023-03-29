@@ -34,7 +34,7 @@ class ProductsService {
             if (!data[this.neededProperties[i]]) {
               const error = new Error(
                 `${this.neededProperties[i]} is not defined o has a invalid value`,
-                { cause: 400 }
+                { code: 400 }
               );
               reject(error);
             }
@@ -84,7 +84,7 @@ class ProductsService {
             resolve(result);
           } else {
             // const error = new Error(`Product id:${id} not found`, {
-            //   cause: 404,
+            //   code: 404,
             // });
             const error = new Error(`Product id:${id} not found`);
             error.code = 404;
@@ -114,7 +114,7 @@ class ProductsService {
           const index = this.products.findIndex((product) => product.id === id);
           if (index === -1) {
             const error = new Error(`Poduct id:${id} not found`, {
-              cause: 404,
+              code: 404,
             });
             reject(error);
           }
@@ -128,7 +128,7 @@ class ProductsService {
               const error = new Error(
                 `Invalid ${this.neededProperties[i]} property value`,
                 {
-                  cause: 400,
+                  code: 400,
                 }
               );
               reject(error);
@@ -137,7 +137,7 @@ class ProductsService {
 
           if (Object.keys(propertiesFilteredProduct).length === 0) {
             const error = new Error(`Properties to update not sent`, {
-              cause: 400,
+              code: 400,
             });
             reject(error);
           }
@@ -171,7 +171,7 @@ class ProductsService {
           const index = this.products.findIndex((product) => product.id === id);
           if (index === -1) {
             error = new Error(`Poduct id:${id} not found`, {
-              cause: 404,
+              code: 404,
             });
             reject(error);
           }
@@ -184,7 +184,7 @@ class ProductsService {
               error = new Error(
                 `${this.neededProperties[i]} property invalid`,
                 {
-                  cause: 400,
+                  code: 400,
                 }
               );
               reject(error);
@@ -193,7 +193,7 @@ class ProductsService {
 
           if (Object.keys(propertiesFilteredProduct).length === 0) {
             error = new Error(`Properties or values to update not sent`, {
-              cause: 400,
+              code: 400,
             });
             reject(error);
           }
@@ -225,7 +225,7 @@ class ProductsService {
           const index = this.products.findIndex((product) => product.id === id);
           if (index === -1) {
             const error = new Error(`Poduct id:${id} not found`, {
-              cause: 404,
+              code: 404,
             });
 
             reject(error);

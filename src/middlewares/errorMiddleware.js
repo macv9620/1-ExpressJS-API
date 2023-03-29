@@ -6,14 +6,12 @@ function errorPrint(error, req, res, next) {
 }
 
 function manageError(error, req, res, next) {
-  console.log('Code en middleware ' + error.code);
   if (error.code) {
     res.status(error.code).json({
       status: error.code,
       message: error.message,
     });
   } else {
-    console.log("entre a error 500");
     res.status(500).json({
       status: 500,
       message: error.message
