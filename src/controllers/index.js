@@ -18,7 +18,6 @@ async function getAll(req, res, next) {
 async function createProduct(req, res, next) {
   try {
     const body = req.body;
-    //Se captura la respuesta del método creado en el servicio
     const result = await service.create(body);
     res.status(result.status).json(result);
   } catch (err) {

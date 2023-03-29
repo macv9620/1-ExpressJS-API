@@ -1,4 +1,3 @@
-//En este archivo deberían importarse todos los routers, categories, filter....
 
 //Se importa express para poder usar .Router()
 const express = require('express');

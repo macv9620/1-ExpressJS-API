@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "e87f4217-f42a-4af1-bc02-98a1fc524cd5",
+		"name": "API-FAKE-EXPRESS-COURSE-1-DEPLY",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26408435"
+	},
+	"item": [
+		{
+			"name": "products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://productsapi-euyr.onrender.com/API/v1/products",
+					"protocol": "https",
+					"host": [
+						"productsapi-euyr",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"API",
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://productsapi-euyr.onrender.com/API/v1/products/bdf79ec5-75eGGGGGGGc-4fce-b697-ebcceba162de",
+					"protocol": "https",
+					"host": [
+						"productsapi-euyr",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"API",
+						"v1",
+						"products",
+						"bdf79ec5-75eGGGGGGGc-4fce-b697-ebcceba162de"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateProduct",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Producto Prueba\",\r\n    \"price\": \"\",\r\n    \"image\": \"https://loremflickr.com/640/480\",\r\n    \"type\": \"Type-4\",\r\n    \"jajajaja\": \"\",\r\n    \"dgfdgdfg\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://productsapi-euyr.onrender.com/api/v1/products",
+					"protocol": "https",
+					"host": [
+						"productsapi-euyr",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateProduct",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"JAJAJA\": \"jajajaj\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://productsapi-euyr.onrender.com/api/v1/products/3583aab0-e0a7-4bf7-8078-d3e7555c799d",
+					"protocol": "https",
+					"host": [
+						"productsapi-euyr",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"3583aab0-e0a7-4bf7-8078-d3e7555c799d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdatePartialProduct",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"HOLI\": \"\",\r\n    \"name\": \"NOMBRE PRUEBA\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://productsapi-euyr.onrender.com/api/v1/products/9bc754ec-2e5d-4d4f-ad9b-061a81de5b32",
+					"protocol": "https",
+					"host": [
+						"productsapi-euyr",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"9bc754ec-2e5d-4d4f-ad9b-061a81de5b32"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteProduct",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://productsapi-euyr.onrender.com/api/v1/products/c6",
+					"protocol": "https",
+					"host": [
+						"productsapi-euyr",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"products",
+						"c6"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

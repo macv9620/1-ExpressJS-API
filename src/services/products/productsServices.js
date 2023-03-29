@@ -5,7 +5,6 @@ class ProductsService {
   constructor() {
     this.products = [];
     this.generateBaseProducts();
-    //Se crea array con propiedades obligatorias para validarlas
     this.neededProperties = ["name", "price", "image"];
   }
 
@@ -33,7 +32,7 @@ class ProductsService {
               data[this.neededProperties[i]];
             if (!data[this.neededProperties[i]]) {
               const error = new Error(
-                `${this.neededProperties[i]} is not defined o has a invalid value`
+                `${this.neededProperties[i]} is not defined or has a invalid value`
               );
               error.code = 400;
               reject(error);
@@ -83,16 +82,11 @@ class ProductsService {
             };
             resolve(result);
           } else {
-            // const error = new Error(`Product id:${id} not found`, {
-            //   code: 404,
-            // });
             const error = new Error(`Product id:${id} not found`);
             error.code = 404;
             reject(error);
           }
         } catch (error) {
-          console.log("Stack del error no controlado");
-          console.log(error.stack);
           reject(error);
         }
       }, setTimeoutTime);
@@ -111,7 +105,7 @@ class ProductsService {
 
           const index = this.products.findIndex((product) => product.id === id);
           if (index === -1) {
-            const error = new Error(`Poduct id:${id} not found`);
+            const error = new Error(`Product id:${id} not found`);
             error.code = 404;
             reject(error);
           }
@@ -163,7 +157,7 @@ class ProductsService {
 
           const index = this.products.findIndex((product) => product.id === id);
           if (index === -1) {
-            error = new Error(`Poduct id:${id} not found`);
+            error = new Error(`Product id:${id} not found`);
             error.code = 404;
             reject(error);
           }
@@ -212,7 +206,7 @@ class ProductsService {
         try {
           const index = this.products.findIndex((product) => product.id === id);
           if (index === -1) {
-            const error = new Error(`Poduct id:${id} not found`);
+            const error = new Error(`Product id:${id} not found`);
             error.code = 404;
 
             reject(error);
