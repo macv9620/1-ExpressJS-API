@@ -35,7 +35,7 @@ async function getItem(req, res, next) {
     const product = await service.findOne(id);
     res.status(product.status).json(product);
   } catch (err) {
-    console.log('Cause en controller ' + err.cause);
+    console.log('Cause en controller ' + err.code);
     next(err);
   }
 }

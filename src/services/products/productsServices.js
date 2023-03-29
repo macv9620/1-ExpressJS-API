@@ -83,10 +83,13 @@ class ProductsService {
             };
             resolve(result);
           } else {
-            const error = new Error(`Product id:${id} not found`, {
-              cause: 404,
-            });
-            console.log('Cause en servicio ' + error.cause);
+            // const error = new Error(`Product id:${id} not found`, {
+            //   cause: 404,
+            // });
+            const error = new Error(`Product id:${id} not found`);
+            error.code = 404;
+            
+            console.log('Code en servicio ' + error.code);
             reject(error);
           }
         } catch (error) {
