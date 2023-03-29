@@ -86,10 +86,12 @@ class ProductsService {
             const error = new Error(`Product id:${id} not found`, {
               cause: 404,
             });
+            console.log('Cause en servicio ' + error.cause);
             reject(error);
           }
         } catch (error) {
-          console.log(error);
+          console.log('Stack del error no controlado');
+          console.log(error.stack);
           reject(error);
         }
       }, setTimeoutTime);

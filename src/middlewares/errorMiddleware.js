@@ -6,15 +6,17 @@ function errorPrint(error, req, res, next) {
 }
 
 function manageError(error, req, res, next) {
+  console.log('Cause en middleware ' + error.cause);
   if (error.cause) {
     res.status(error.cause).json({
       status: error.cause,
       message: error.message,
     });
   } else {
+    console.log("entre a error 500");
     res.status(500).json({
       status: 500,
-      message: error.message,
+      message: error.message
     });
   }
 }
