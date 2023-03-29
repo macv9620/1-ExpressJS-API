@@ -114,7 +114,6 @@ class ProductsService {
             if (paramsToUpdate[this.neededProperties[i]]) {
               propertiesFilteredProduct[this.neededProperties[i]] =
                 paramsToUpdate[this.neededProperties[i]];
-              SADFASFSADFSD;
             } else if (paramsToUpdate[this.neededProperties[i]] === "") {
               const error = new Error(
                 `Invalid ${this.neededProperties[i]} property value`);
