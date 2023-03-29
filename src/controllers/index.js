@@ -35,7 +35,6 @@ async function getItem(req, res, next) {
     const product = await service.findOne(id);
     res.status(product.status).json(product);
   } catch (err) {
-    console.log('code en controller ' + err.code);
     next(err);
   }
 }
@@ -49,10 +48,6 @@ async function updatePartial(req, res, next) {
     res.status(updateResult.status).json(updateResult);
   } catch (err) {
     next(err);
-    // res.status(err.code).json({
-    //   status: err.code,
-    //   message: err.message,
-    // });
   }
 }
 

@@ -33,9 +33,9 @@ class ProductsService {
               data[this.neededProperties[i]];
             if (!data[this.neededProperties[i]]) {
               const error = new Error(
-                `${this.neededProperties[i]} is not defined o has a invalid value`,
-                { code: 400 }
+                `${this.neededProperties[i]} is not defined o has a invalid value`
               );
+              error.code = 400;
               reject(error);
             }
           }
@@ -88,12 +88,10 @@ class ProductsService {
             // });
             const error = new Error(`Product id:${id} not found`);
             error.code = 404;
-            
-            console.log('Code en servicio ' + error.code);
             reject(error);
           }
         } catch (error) {
-          console.log('Stack del error no controlado');
+          console.log("Stack del error no controlado");
           console.log(error.stack);
           reject(error);
         }
@@ -113,9 +111,8 @@ class ProductsService {
 
           const index = this.products.findIndex((product) => product.id === id);
           if (index === -1) {
-            const error = new Error(`Poduct id:${id} not found`, {
-              code: 404,
-            });
+            const error = new Error(`Poduct id:${id} not found`);
+            error.code = 404;
             reject(error);
           }
 
@@ -126,19 +123,15 @@ class ProductsService {
               SADFASFSADFSD;
             } else if (paramsToUpdate[this.neededProperties[i]] === "") {
               const error = new Error(
-                `Invalid ${this.neededProperties[i]} property value`,
-                {
-                  code: 400,
-                }
-              );
+                `Invalid ${this.neededProperties[i]} property value`);
+              error.code = 400;
               reject(error);
             }
           }
 
           if (Object.keys(propertiesFilteredProduct).length === 0) {
-            const error = new Error(`Properties to update not sent`, {
-              code: 400,
-            });
+            const error = new Error(`Properties to update not sent`);
+            error.code = 400;
             reject(error);
           }
 
@@ -170,9 +163,8 @@ class ProductsService {
 
           const index = this.products.findIndex((product) => product.id === id);
           if (index === -1) {
-            error = new Error(`Poduct id:${id} not found`, {
-              code: 404,
-            });
+            error = new Error(`Poduct id:${id} not found`);
+            error.code = 404;
             reject(error);
           }
 
@@ -182,19 +174,15 @@ class ProductsService {
                 paramsToUpdate[this.neededProperties[i]];
             } else {
               error = new Error(
-                `${this.neededProperties[i]} property invalid`,
-                {
-                  code: 400,
-                }
-              );
+                `${this.neededProperties[i]} property invalid`);
+              error.code = 400;
               reject(error);
             }
           }
 
           if (Object.keys(propertiesFilteredProduct).length === 0) {
-            error = new Error(`Properties or values to update not sent`, {
-              code: 400,
-            });
+            error = new Error(`Properties or values to update not sent`);
+            error.code = 400;
             reject(error);
           }
 
@@ -224,9 +212,8 @@ class ProductsService {
         try {
           const index = this.products.findIndex((product) => product.id === id);
           if (index === -1) {
-            const error = new Error(`Poduct id:${id} not found`, {
-              code: 404,
-            });
+            const error = new Error(`Poduct id:${id} not found`);
+            error.code = 404;
 
             reject(error);
           } else {
